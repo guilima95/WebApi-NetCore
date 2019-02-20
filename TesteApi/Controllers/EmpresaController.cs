@@ -38,7 +38,7 @@ namespace TesteApi.Controllers
 
                 var response = _serviceEmpresa.Listar();
 
-                return await ResponseAsync(response, _serviceEmpresa);
+                return await ResponseAsync(response);
             }
             catch (Exception ex)
             {
@@ -60,7 +60,7 @@ namespace TesteApi.Controllers
 
                 var response = _serviceEmpresa.ObterPorNome(name);
 
-                return await ResponseAsync(response, _serviceEmpresa);
+                return await ResponseAsync(response);
             }
             catch (Exception ex)
             {
@@ -80,7 +80,7 @@ namespace TesteApi.Controllers
 
                 var response = _serviceEmpresa.ListarPorTipo(types);
 
-                return await ResponseAsync(response, _serviceEmpresa);
+                return await ResponseAsync(response);
             }
             catch (Exception ex)
             {

@@ -7,7 +7,7 @@ using Teste.Domain.Interfaces.Repositories;
 
 namespace Teste.Domain.Services
 {
-   public class ServiceUsuario : IServiceUsuario
+    public class ServiceUsuario : IServiceUsuario
     {
         private readonly IRepositoryUsuario _repositoryUsuario;
 
@@ -19,7 +19,7 @@ namespace Teste.Domain.Services
         {
             if (request == null)
                 throw new ApplicationException("");
-            
+
             var usuario = new Usuario(request.Email, request.Password);
             usuario = _repositoryUsuario.Obter(usuario.Email, usuario.Password);
 
@@ -30,6 +30,22 @@ namespace Teste.Domain.Services
 
             return response;
 
+
+        }
+
+        public AdicionarUsuarioResponse AdicionarUsuario(AdicionarUsuarioRequest request)
+        {
+            if (request == null)
+                throw new ApplicationException("");
+
+            var usuario = new Usuario(request.Email, request.Senha);
+
+            if (usuario == null)
+                throw new ApplicationException("");
+
+            _repositoryUsuario.Adicionar(usuario);
+
+            return new AdicionarUsuarioResponse(usuario.Id);
 
         }
     }

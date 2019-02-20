@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Policy;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -31,10 +32,7 @@ namespace TesteApi.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("api/v1/Usuario/Autenticar")]
-        public object Autenticar(
-             [FromBody]AutenticarUsuarioRequest request,
-             [FromServices]SigningConfigurations signingConfigurations,
-             [FromServices]TokenConfigurations tokenConfigurations)
+        public object Autenticar([FromBody]AutenticarUsuarioRequest request, [FromServices]SigningConfigurations signingConfigurations, [FromServices]TokenConfigurations tokenConfigurations)
         {
             bool credenciaisValidas = false;
             AutenticarUsuarioResponse response = _serviceUsuario.AutenticarUsuario(request);
@@ -43,8 +41,7 @@ namespace TesteApi.Controllers
 
             if (credenciaisValidas)
             {
-                ClaimsIdentity identity = new ClaimsIdentity(
-                    new GenericIdentity(response.Id.ToString(), "Id"),
+                ClaimsIdentity identity = new ClaimsIdentity(new GenericIdentity(response.Id.ToString(), "Id"),
                     new[] {
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
                         //new Claim(JwtRegisteredClaimNames.UniqueName, response.Usuario)
@@ -53,8 +50,7 @@ namespace TesteApi.Controllers
                 );
 
                 DateTime dataCriacao = DateTime.Now;
-                DateTime dataExpiracao = dataCriacao +
-                    TimeSpan.FromSeconds(tokenConfigurations.Seconds);
+                DateTime dataExpiracao = dataCriacao + TimeSpan.FromSeconds(tokenConfigurations.Seconds);
 
                 var handler = new JwtSecurityTokenHandler();
                 var securityToken = handler.CreateToken(new SecurityTokenDescriptor
@@ -65,7 +61,7 @@ namespace TesteApi.Controllers
                     Subject = identity,
                     NotBefore = dataCriacao,
                     Expires = dataExpiracao,
-                    
+
                 });
                 var token = handler.WriteToken(securityToken);
 
@@ -91,5 +87,25 @@ namespace TesteApi.Controllers
                 };
             }
         }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("api/v1/Usuario/Adicionar")]
+        public async Task<IActionResult> Adicionar([FromBody]AdicionarUsuarioRequest request)
+        {
+            try
+            {
+                var response = _serviceUsuario.AdicionarUsuario(request);
+                return await ResponseAsync(response);
+            }
+            catch (Exception ex)
+            {
+                return await ResponseExceptionAsync(ex);
+            }
+        }
+
+
+
+
     }
 }

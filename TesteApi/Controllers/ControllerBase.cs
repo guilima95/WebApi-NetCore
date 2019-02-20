@@ -16,7 +16,7 @@ namespace TesteApi.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IActionResult> ResponseAsync(IEnumerable<Teste.Domain.Arguments.Empresa.EmpresaResponse> response, object result)
+        public async Task<IActionResult> ResponseAsync(object result)
         {
             try
             {

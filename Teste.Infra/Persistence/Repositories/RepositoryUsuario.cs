@@ -30,5 +30,10 @@ namespace Teste.Infra.Persistence.Repositories
         {
             return _context.Usuarios.FirstOrDefault(x => x.Email == email && x.Password == password);
         }
+
+        public void Adicionar(Usuario usuario)
+        {
+            _context.Usuarios.Add(usuario);
+        }
     }
 }

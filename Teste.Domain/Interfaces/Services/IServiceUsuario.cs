@@ -8,5 +8,7 @@ namespace Teste.Domain.Services
     public interface IServiceUsuario
     {
         AutenticarUsuarioResponse AutenticarUsuario(AutenticarUsuarioRequest request);
+
+        AdicionarUsuarioResponse AdicionarUsuario(AdicionarUsuarioRequest request);
     }
 }
