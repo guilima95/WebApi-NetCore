@@ -49,11 +49,11 @@ namespace TesteApi
             services.AddScoped<TesteContext, TesteContext>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-            services.AddTransient<IServiceEmpresa, ServiceEmpresa>();
+            services.AddTransient<IServiceCategoria, ServiceCategoria>();
             services.AddTransient<IServiceUsuario, Teste.Domain.Services.ServiceUsuario>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddTransient<IRepositoryEmpresa, RepositoryEmpresa>();
+            services.AddTransient<IRepositoryCategoria, RepositoryCategoria>();
             services.AddTransient<IRepositoryUsuario, RepositoryUsuario>();
 
 

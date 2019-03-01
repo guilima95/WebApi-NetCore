@@ -14,29 +14,26 @@ using Teste.Infra.Transactions;
 
 namespace TesteApi.Controllers
 {
-    public class EmpresaController : ControllerBase
+    public class CategoriaController : ControllerBase
     {
         // GET: /<controller>/
 
-        private readonly IServiceEmpresa _serviceEmpresa;
+        private readonly IServiceCategoria _serviceCategoria;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public EmpresaController(IHttpContextAccessor httpContextAccessor, IUnitOfWork unityOfWork, IServiceEmpresa serviceEmpresa) : base(unityOfWork)
+        public CategoriaController(IHttpContextAccessor httpContextAccessor, IUnitOfWork unityOfWork, IServiceCategoria serviceCategoria) : base(unityOfWork)
         {
             _httpContextAccessor = httpContextAccessor;
-            _serviceEmpresa = serviceEmpresa;
+            _serviceCategoria = serviceCategoria;
         }
 
         [HttpGet]
-        [Route("api/v1/Empresa/Listar")]
+        [Route("api/v1/Categoria/Listar")]
         public async Task<IActionResult> Listar()
         {
             try
             {
-                //string usuario = _httpContextAccessor.HttpContext.User.FindFirst("Usuario").Value;
-                //AutenticarUsuarioResponse usuarioResponse = JsonConvert.DeserializeObject<AutenticarUsuarioResponse>(usuario);
-
-                var response = _serviceEmpresa.Listar();
+                var response = _serviceCategoria.Listar();
 
                 return await ResponseAsync(response);
             }
@@ -49,7 +46,7 @@ namespace TesteApi.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        [Route("api/v1/Empresa/ListarPorNome")]
+        [Route("api/v1/Categoria/ListarPorNome")]
         public async Task<IActionResult> ListarPorNome(string name)
         {
             try
@@ -58,7 +55,7 @@ namespace TesteApi.Controllers
                 //string usuario = _httpContextAccessor.HttpContext.User.FindFirst("Usuario").Value;
                 //AutenticarUsuarioResponse usuarioResponse = JsonConvert.DeserializeObject<AutenticarUsuarioResponse>(usuario);
 
-                var response = _serviceEmpresa.ObterPorNome(name);
+                var response = _serviceCategoria.ObterPorDescricao(name);
 
                 return await ResponseAsync(response);
             }
@@ -68,25 +65,25 @@ namespace TesteApi.Controllers
 
             }
         }
-        [AllowAnonymous]
-        [HttpGet]
-        [Route("api/v1/Empresa/ListarPorTipo")]
-        public async Task<IActionResult> ListarPorTipo(int types)
-        {
-            try
-            {
-                //string usuario = _httpContextAccessor.HttpContext.User.FindFirst("Usuario").Value;
-                //AutenticarUsuarioResponse usuarioResponse = JsonConvert.DeserializeObject<AutenticarUsuarioResponse>(usuario);
+        //[AllowAnonymous]
+        //[HttpGet]
+        //[Route("api/v1/Categoria/ListarPorTipo")]
+        //public async Task<IActionResult> ListarPorTipo(int types)
+        //{
+        //    try
+        //    {
+        //        //string usuario = _httpContextAccessor.HttpContext.User.FindFirst("Usuario").Value;
+        //        //AutenticarUsuarioResponse usuarioResponse = JsonConvert.DeserializeObject<AutenticarUsuarioResponse>(usuario);
 
-                var response = _serviceEmpresa.ListarPorTipo(types);
+        //        var response = _serviceCategoria.ListarPorTipo(types);
 
-                return await ResponseAsync(response);
-            }
-            catch (Exception ex)
-            {
-                return await ResponseExceptionAsync(ex);
+        //        return await ResponseAsync(response);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return await ResponseExceptionAsync(ex);
 
-            }
-        }
+        //    }
+        //}
     }
 }

@@ -16,7 +16,7 @@ namespace Teste.Infra.Persistence.EF
         }
 
         public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Empresa> Empresas { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
                
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -32,9 +32,9 @@ namespace Teste.Infra.Persistence.EF
 
             //ignorar classes
             //aplicar configurações
-            modelBuilder.ApplyConfiguration(new MapEmpresa());
+            modelBuilder.ApplyConfiguration(new MapCategoria());
             modelBuilder.ApplyConfiguration(new MapUsuario());
-            //modelBuilder.ApplyConfiguration(new MapFavorito());
+            modelBuilder.ApplyConfiguration(new MapLancamento());
 
             base.OnModelCreating(modelBuilder);
 

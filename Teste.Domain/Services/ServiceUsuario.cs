@@ -24,7 +24,7 @@ namespace Teste.Domain.Services
             usuario = _repositoryUsuario.Obter(usuario.Email, usuario.Password);
 
             if (usuario == null)
-                throw new ApplicationException("");
+                throw new ApplicationException("Usuário ou Senha inválidos, tente novamente.");
 
             var response = (AutenticarUsuarioResponse)usuario;
 
